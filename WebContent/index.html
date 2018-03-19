@@ -5,11 +5,7 @@
 </head>
 <body>
 <script src="jquery.min.js"></script>
-<script>
-$.noConflict();
-jQuery(document).ready(function($) { 
-})
-</script>
+
 
 
 <table border="0" cellpadding="0" cellspacing="0">
@@ -60,11 +56,11 @@ jQuery(document).ready(function($) {
   <!-- date type-->
     <a href="#" onmouseover="Calendar.setup({inputField  : getSib(this.previousSibling), ifFormat    : '%d-%b-%Y', button      : 'anchor480' });"
        name="anchor480" id="anchor480">
-        <img src="images/bt_Calendar.gif" alt="Show Calendar" title="Show Calendar" border="0" id="anchor480"/></a>
+        </a>
         </td>
 	    <td valign="top">
 	    <a tabindex="1001" href="#"   onmouseover="callTip(genToolTips_ItemInput(480));" onmouseout="UnTip()" onclick="openDNWindow('CreateDiscrepancyNote?isGroup=-1&eventCRFId=108&subjectId=18&itemId=480&groupLabel=&sectionId=153&id=1901&name=itemData&field=input480&column=value&enterData=1&errorFlag=&eventName=Allergies&eventDate=2017-12-28 12:00:00.0&crfName=TDS: CRF for allergenes v.1','spanAlert-input480',''); return false;">
-	    <img id="flag_input480" name="flag_input480" src="images/icon_noNote.gif" border="0" alt="Discrepancy Note"	    />
+	    
 	    </a>
                             </td>
                             <td valign="top">
@@ -95,17 +91,69 @@ jQuery(document).ready(function($) {
                                 </td>
 
                             <td valign="top" nowrap="nowrap">
-      <textarea id="input481" tabindex="2"  name="input481" rows="5" cols="40">initial</textarea></td>
+      <textarea id="input481" tabindex="2"  name="input481" rows="5" cols="40">
+code1
+code2
+code2
+code4
+</textarea></td>
 	    <td valign="top">
 	    <a tabindex="1002" href="#"   onmouseover="callTip(genToolTips_ItemInput(481));" onmouseout="UnTip()"> 
-	    <img id="flag_input481" name="flag_input481" src="images/icon_noNote.gif" border="0" alt="Discrepancy Note" /></a>
+	    </a>
 	    </td>
 		<td>
 		
 and a button <br />
-<input type="button" id="ext_window" value="open the page with allergens" onclick='window.open("allergens.html");' />
+<input type="button" id="scancheck" value="check and reformat scans" />
 		
-		This field is read-only
+<script src="jquery.min.js"></script>
+<script>
+$.noConflict();
+jQuery(document).ready(function($) { 
+	// set the minimum length of a barcode
+	var minimum_length = 4;
+	// make reference to the scanner field, using the button named scancheck
+	var barcodes = $('#scancheck').parent().parent().find("textarea");
+	var barcodes_array = [];
+	
+	// add function check and reformat to the button
+	$("#scancheck").click(function(){
+        // close this window
+        check_and_reformat();
+     });
+	
+	function check_and_reformat(){
+		// use a temporary variable to manipulate the content
+		var temp = $(barcodes).val();
+		// replace spaces with new-lines
+		temp = temp.replace(/ +/g, '\n');
+		barcodes_array = temp.split('\n');
+		// make the elements of the array unique
+		barcodes_array = array_unique(barcodes_array);
+		var result = '';
+		for ( var i = 0 ; i < barcodes_array.length ; ++i ) {
+			result = result + barcodes_array[i] + '\n';
+		}
+		$(barcodes).val(result);
+	}	
+
+	function array_unique(array) {
+	    var unique = [];
+	    for ( var i = 0 ; i < array.length ; ++i ) {
+	    	// console.log('checking ' + array[i] + ', ' + array[i].length);
+	        if ( unique.indexOf(array[i]) == -1 ){
+	            // only include if greater than the minimum length
+	            if (array[i].length > minimum_length){
+	            	unique.push(array[i]);	
+	            }
+	        }
+	    }
+	    // also sort the result
+	    unique = unique.sort();
+	    return unique;
+	}
+})
+</script>
 	                                </td>
                         </tr>                         
                     </table>
@@ -143,7 +191,7 @@ Summary
         </td>
 	    <td valign="top">
 	    <a tabindex="1001" href="#"   onmouseover="callTip(genToolTips_ItemInput(480));" onmouseout="UnTip()" onclick="openDNWindow('CreateDiscrepancyNote?isGroup=-1&eventCRFId=108&subjectId=18&itemId=480&groupLabel=&sectionId=153&id=1901&name=itemData&field=input480&column=value&enterData=1&errorFlag=&eventName=Allergies&eventDate=2017-12-28 12:00:00.0&crfName=TDS: CRF for allergenes v.1','spanAlert-input480',''); return false;">
-	    <img id="flag_input480" name="flag_input480" src="images/icon_noNote.gif" border="0" alt="Discrepancy Note"	    />
+	    
 	    </a>
                             </td>
                             <td valign="top">
