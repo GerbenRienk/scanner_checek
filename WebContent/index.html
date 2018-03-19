@@ -120,6 +120,8 @@ jQuery(document).ready(function($) {
 	$("#scancheck").click(function(){
         // close this window
         check_and_reformat();
+        // resize the text area
+        $(barcodes).attr('rows', barcodes_array.length + 1);
      });
 	
 	function check_and_reformat(){
